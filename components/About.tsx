@@ -12,10 +12,6 @@ export const About: React.FC = () => {
 
     return (
         <section id="about" className="py-24 bg-brand-black relative">
-             <div className="absolute right-0 top-20 w-1/3 h-full opacity-20 hidden md:block">
-                 <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1966&auto=format&fit=crop" className="w-full h-full object-cover mask-image-gradient" alt="Background" style={{ maskImage: 'linear-gradient(to right, transparent, black)' }} />
-             </div>
-
              <div className="container mx-auto px-6 relative z-10">
                  <div className="flex flex-col md:flex-row gap-16 items-center">
                      <div className="w-full md:w-1/2" ref={elementRef}>
@@ -39,7 +35,7 @@ export const About: React.FC = () => {
                      
                      <div className="w-full md:w-1/2 relative">
                          <div className="relative z-10 border border-white/10 bg-white/5 p-2 backdrop-blur-sm">
-                             <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2070&auto=format&fit=crop" alt="Showroom" className="w-full h-auto shadow-2xl" />
+                             <img src="https://i.postimg.cc/fRFYYxvY/504885413-1747222475863981-5039661255860359832-n.jpg" alt="Showroom" className="w-full h-auto shadow-2xl" />
                          </div>
                          {/* Decorative squares */}
                          <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-[#BF953F] z-0 opacity-70"></div>

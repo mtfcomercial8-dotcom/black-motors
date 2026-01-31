@@ -13,19 +13,16 @@ export const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section id="hero" className="relative h-screen w-full overflow-hidden flex items-center justify-center">
-      {/* Parallax Background */}
+    <section id="hero" className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[#050505]">
+      {/* Background - Image Removed, replaced with subtle gradient */}
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1503376763036-066120622c74?q=80&w=2070&auto=format&fit=crop")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          background: 'radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)',
           transform: `translateY(${offset * 0.5}px)`,
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-        <div className="absolute inset-0 bg-black/40 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
       </div>
 
       {/* Content */}
