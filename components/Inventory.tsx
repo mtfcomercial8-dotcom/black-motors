@@ -66,6 +66,24 @@ const cars: Car[] = [
     price: "Sob Consulta",
     features: ["V8 Biturbo", "Night Pkg", "Carbon"],
     image: "https://i.postimg.cc/jj8qWbYg/509680605-593791197115587-4192616528417946862-n.jpg"
+  },
+  {
+    id: 8,
+    name: "Land Cruiser 79",
+    brand: "Toyota",
+    year: 2024,
+    price: "Sob Consulta",
+    features: ["V8 Diesel", "Namib Edition", "4x4"],
+    image: "https://i.postimg.cc/9Fdzbsjy/599525265-17887946079400240-1779273656960371058-n.jpg"
+  },
+  {
+    id: 9,
+    name: "Lexus LX 500d",
+    brand: "Lexus",
+    year: 2024,
+    price: "Sob Consulta",
+    features: ["F-Sport", "Diesel", "Black Ed."],
+    image: "https://i.postimg.cc/28hLJVnj/601765087-17888293083400240-8636408631964467256-n.jpg"
   }
 ];
 
