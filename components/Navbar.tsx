@@ -23,13 +23,13 @@ export const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-4' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)]' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2 group cursor-pointer">
-          <CarFront className="w-8 h-8 text-brand-gold group-hover:text-white transition-colors duration-300" />
+          <CarFront className="w-8 h-8 text-[#FCF6BA] drop-shadow-[0_0_5px_rgba(191,149,63,0.5)]" />
           <span className="font-display font-bold text-2xl tracking-widest text-white">
-            BLACK<span className="text-brand-gold">MOTORS</span>
+            BLACK<span className="text-gold-gradient drop-shadow-[0_0_8px_rgba(191,149,63,0.3)]">MOTORS</span>
           </span>
         </div>
 
@@ -39,13 +39,18 @@ export const Navbar: React.FC = () => {
             <a 
               key={item.label} 
               href={item.href}
-              className="text-sm uppercase tracking-widest text-gray-300 hover:text-brand-gold transition-colors duration-300 font-medium relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-brand-gold after:transition-all after:duration-300 hover:after:w-full"
+              className="text-sm uppercase tracking-widest text-gray-300 hover:text-[#FCF6BA] transition-colors duration-300 font-medium relative group"
             >
               {item.label}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-metallic transition-all duration-300 group-hover:w-full"></span>
             </a>
           ))}
-          <button className="border border-brand-gold text-brand-gold px-6 py-2 rounded-none hover:bg-brand-gold hover:text-black transition-all duration-300 uppercase text-xs tracking-widest font-bold transform hover:scale-105">
-            Agendar Visita
+          <button className="relative px-6 py-2 group overflow-hidden">
+            <div className="absolute inset-0 bg-gold-metallic opacity-20 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 border border-[#BF953F] group-hover:border-[#FCF6BA] transition-colors duration-300"></div>
+            <span className="relative z-10 text-[#FCF6BA] group-hover:text-black uppercase text-xs tracking-widest font-bold font-display transition-colors duration-300">
+              Agendar Visita
+            </span>
           </button>
         </div>
 
@@ -54,7 +59,7 @@ export const Navbar: React.FC = () => {
           className="md:hidden text-white"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          {isMenuOpen ? <X /> : <Menu />}
+          {isMenuOpen ? <X /> : <Menu className="text-[#FCF6BA]" />}
         </button>
       </div>
 
@@ -65,7 +70,7 @@ export const Navbar: React.FC = () => {
             <a 
               key={item.label} 
               href={item.href}
-              className="text-lg font-display uppercase text-white hover:text-brand-gold"
+              className="text-lg font-display uppercase text-white hover:text-[#FCF6BA]"
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}

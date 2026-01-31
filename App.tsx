@@ -24,12 +24,12 @@ const App: React.FC = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 to-black"></div>
         <div className="z-10 flex flex-col items-center">
             <span className="font-display font-bold text-4xl tracking-widest text-white animate-pulse">
-            BLACK<span className="text-brand-gold">MOTORS</span>
+            BLACK<span className="text-gold-gradient">MOTORS</span>
             </span>
             <div className="mt-4 w-48 h-0.5 bg-gray-800 overflow-hidden relative">
-                <div className="absolute inset-y-0 left-0 bg-brand-gold w-1/2 animate-[shimmer_1s_infinite]"></div>
+                <div className="absolute inset-y-0 left-0 bg-gold-metallic w-1/2 animate-[shimmer_1s_infinite]"></div>
             </div>
-            <p className="mt-2 text-xs text-gray-500 uppercase tracking-[0.5em]">Carregando</p>
+            <p className="mt-2 text-xs text-[#BF953F] uppercase tracking-[0.5em]">Carregando</p>
         </div>
         <style>{`
             @keyframes shimmer {
@@ -42,7 +42,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="bg-brand-black min-h-screen text-white selection:bg-brand-gold selection:text-black">
+    <div className="bg-brand-black min-h-screen text-white selection:bg-[#BF953F] selection:text-black">
       <Navbar />
       <main>
         <Hero />

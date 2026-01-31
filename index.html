@@ -20,19 +20,27 @@
               brand: {
                 black: '#050505',
                 dark: '#0a0a0a',
-                gold: '#D4AF37',
-                gray: '#1f1f1f',
-                silver: '#e5e7eb'
+                gold: '#D4AF37', // Fallback
               }
+            },
+            backgroundImage: {
+              'gold-gradient': 'linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)',
+              'gold-metallic': 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%)',
+              'gold-subtle': 'linear-gradient(to right, #C6A355, #EAD794, #C6A355)'
             },
             animation: {
               'float': 'float 6s ease-in-out infinite',
               'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'shimmer': 'shimmer 2s linear infinite',
             },
             keyframes: {
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },
                 '50%': { transform: 'translateY(-20px)' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '200% 0' },
+                '100%': { backgroundPosition: '-200% 0' }
               }
             }
           }
@@ -52,11 +60,21 @@
           -ms-overflow-style: none;
           scrollbar-width: none;
       }
-      .parallax-bg {
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+      .text-gold-gradient {
+        background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% auto;
+        animation: shine 4s linear infinite;
+      }
+      .border-gold-gradient {
+        border-image: linear-gradient(to right, #BF953F, #FCF6BA, #B38728) 1;
+      }
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
       }
     </style>
   <script type="importmap">
@@ -72,5 +90,6 @@
 </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
