@@ -3,10 +3,10 @@ import { Instagram, Facebook, Phone, MapPin, Mail } from 'lucide-react';
 
 export const Footer: React.FC = () => {
     return (
-        <footer className="bg-black border-t border-white/10 pt-20 pb-10">
+        <footer id="contact" className="bg-black border-t border-white/10 pt-20 pb-10">
             <div className="container mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-                    <div className="col-span-1 md:col-span-2">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                    <div className="col-span-1">
                         <h2 className="font-display font-bold text-3xl tracking-widest text-white mb-6">
                             BLACK<span className="text-gold-gradient">MOTORS</span>
                         </h2>
@@ -44,10 +44,9 @@ export const Footer: React.FC = () => {
                     <div>
                         <h4 className="font-display font-bold text-white uppercase tracking-widest mb-6">Links Rápidos</h4>
                         <ul className="space-y-4 text-gray-400">
+                            <li><a href="#hero" className="hover:text-[#FCF6BA] transition-colors">Início</a></li>
                             <li><a href="#inventory" className="hover:text-[#FCF6BA] transition-colors">Estoque</a></li>
-                            <li><a href="#services" className="hover:text-[#FCF6BA] transition-colors">Serviços</a></li>
-                            <li><a href="#about" className="hover:text-[#FCF6BA] transition-colors">Sobre Nós</a></li>
-                            <li><a href="#contact" className="hover:text-[#FCF6BA] transition-colors">Agendar Visita</a></li>
+                            <li><a href="https://wa.me/244923000000" className="hover:text-[#FCF6BA] transition-colors">Agendar Visita</a></li>
                         </ul>
                     </div>
                 </div>

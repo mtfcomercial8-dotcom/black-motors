@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Inventory } from './components/Inventory';
-import { Services } from './components/Services';
-import { About } from './components/About';
 import { Footer } from './components/Footer';
 import { MessageCircle } from 'lucide-react';
 
@@ -47,8 +45,6 @@ const App: React.FC = () => {
       <main>
         <Hero />
         <Inventory />
-        <Services />
-        <About />
       </main>
       <Footer />
 
