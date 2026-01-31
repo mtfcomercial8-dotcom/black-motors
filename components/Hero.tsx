@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  onNavigate: (page: 'home' | 'inventory', sectionId?: string) => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
@@ -49,16 +53,22 @@ export const Hero: React.FC = () => {
         </p>
 
         <div className="flex flex-col md:flex-row gap-6 justify-center items-center opacity-0 animate-[slideUp_1s_ease-out_forwards]" style={{ animationDelay: '0.8s' }}>
-          <a href="#inventory" className="group relative px-8 py-4 bg-gold-metallic text-black font-bold uppercase tracking-widest overflow-hidden hover:shadow-[0_0_20px_rgba(212,175,55,0.6)] transition-shadow duration-300">
+          <button 
+            onClick={() => onNavigate('inventory')}
+            className="group relative px-8 py-4 bg-gold-metallic text-black font-bold uppercase tracking-widest overflow-hidden hover:shadow-[0_0_20px_rgba(212,175,55,0.6)] transition-shadow duration-300 cursor-pointer"
+          >
             <span className="relative z-10 flex items-center gap-2">
               Ver Estoque <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
             {/* Shine effect */}
             <div className="absolute inset-0 bg-white/40 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-          </a>
-          <a href="#contact" className="px-8 py-4 border border-[#BF953F]/50 text-[#FCF6BA] hover:border-[#FCF6BA] hover:text-white font-bold uppercase tracking-widest transition-all hover:bg-white/5 backdrop-blur-sm">
+          </button>
+          <button 
+            onClick={() => onNavigate('home', '#contact')}
+            className="px-8 py-4 border border-[#BF953F]/50 text-[#FCF6BA] hover:border-[#FCF6BA] hover:text-white font-bold uppercase tracking-widest transition-all hover:bg-white/5 backdrop-blur-sm cursor-pointer"
+          >
             Fale Conosco
-          </a>
+          </button>
         </div>
       </div>
 

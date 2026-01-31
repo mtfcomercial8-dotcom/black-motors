@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { Car } from '../types';
-import { Gauge, Calendar, Zap, ArrowUpRight, ArrowRight } from 'lucide-react';
+import { Gauge, Calendar, Zap, ArrowUpRight } from 'lucide-react';
 
 const cars: Car[] = [
   {
@@ -97,10 +97,10 @@ const CarCard: React.FC<{ car: Car; index: number }> = ({ car, index }) => {
       {/* Content */}
       <div className="p-6 relative z-20">
         <div className="absolute -top-10 left-6">
-           <h3 className="text-2xl font-display font-black text-white uppercase italic tracking-tighter drop-shadow-xl">{car.name}</h3>
+           <h3 className="text-2xl font-display font-black text-white uppercase italic tracking-tighter drop-shadow-xl w-full break-words pr-4">{car.name}</h3>
         </div>
         
-        <div className="mt-2 flex gap-3 text-gray-400 text-xs mb-6 border-b border-white/5 pb-4 flex-wrap">
+        <div className="mt-4 flex gap-3 text-gray-400 text-xs mb-6 border-b border-white/5 pb-4 flex-wrap">
             <div className="flex items-center gap-1 bg-white/5 px-2 py-1 rounded">
                 <Calendar className="w-3 h-3 text-[#BF953F]" />
                 {car.year}

@@ -1,52 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { Featured } from './components/Featured';
+import { About } from './components/About';
+import { Services } from './components/Services';
 import { Inventory } from './components/Inventory';
 import { Footer } from './components/Footer';
 import { MessageCircle } from 'lucide-react';
 
 const App: React.FC = () => {
-  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState<'home' | 'inventory'>('home');
 
-  // Simulate initial loading for a smooth entrance
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="h-screen w-full bg-black flex flex-col items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 to-black"></div>
-        <div className="z-10 flex flex-col items-center">
-            <span className="font-display font-bold text-4xl tracking-widest text-white animate-pulse">
-            BLACK<span className="text-gold-gradient">MOTORS</span>
-            </span>
-            <div className="mt-4 w-48 h-0.5 bg-gray-800 overflow-hidden relative">
-                <div className="absolute inset-y-0 left-0 bg-gold-metallic w-1/2 animate-[shimmer_1s_infinite]"></div>
-            </div>
-            <p className="mt-2 text-xs text-[#BF953F] uppercase tracking-[0.5em]">Carregando</p>
-        </div>
-        <style>{`
-            @keyframes shimmer {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(200%); }
-            }
-        `}</style>
-      </div>
-    );
-  }
+  const handleNavigate = (page: 'home' | 'inventory', sectionId?: string) => {
+    setCurrentPage(page);
+    
+    if (page === 'home' && sectionId) {
+      // Pequeno delay para garantir que o componente foi renderizado antes do scroll
+      setTimeout(() => {
+        const element = document.getElementById(sectionId.replace('#', ''));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="bg-brand-black min-h-screen text-white selection:bg-[#BF953F] selection:text-black">
-      <Navbar />
+      <Navbar onNavigate={handleNavigate} currentPage={currentPage} />
       <main>
-        <Hero />
-        <Inventory />
+        {currentPage === 'home' ? (
+          <>
+            <Hero onNavigate={handleNavigate} />
+            <Featured />
+            <About />
+            <Services />
+          </>
+        ) : (
+          <div className="pt-20 min-h-screen bg-brand-black">
+             <Inventory />
+          </div>
+        )}
       </main>
-      <Footer />
+      <Footer onNavigate={handleNavigate} />
 
       {/* Floating Action Button (WhatsApp Style) */}
       <a 

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Instagram, Facebook, Phone, MapPin, Mail } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigate: (page: 'home' | 'inventory', sectionId?: string) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     return (
         <footer id="contact" className="bg-black border-t border-white/10 pt-20 pb-10">
             <div className="container mx-auto px-6">
@@ -43,9 +47,11 @@ export const Footer: React.FC = () => {
 
                     <div>
                         <h4 className="font-display font-bold text-white uppercase tracking-widest mb-6">Links Rápidos</h4>
-                        <ul className="space-y-4 text-gray-400">
-                            <li><a href="#hero" className="hover:text-[#FCF6BA] transition-colors">Início</a></li>
-                            <li><a href="#inventory" className="hover:text-[#FCF6BA] transition-colors">Estoque</a></li>
+                        <ul className="space-y-4 text-gray-400 cursor-pointer">
+                            <li><button onClick={() => onNavigate('home', '#hero')} className="hover:text-[#FCF6BA] transition-colors text-left">Início</button></li>
+                            <li><button onClick={() => onNavigate('home', '#about')} className="hover:text-[#FCF6BA] transition-colors text-left">Sobre</button></li>
+                            <li><button onClick={() => onNavigate('home', '#services')} className="hover:text-[#FCF6BA] transition-colors text-left">Serviços</button></li>
+                            <li><button onClick={() => onNavigate('inventory')} className="hover:text-[#FCF6BA] transition-colors text-left">Estoque</button></li>
                             <li><a href="https://wa.me/244923000000" className="hover:text-[#FCF6BA] transition-colors">Agendar Visita</a></li>
                         </ul>
                     </div>
