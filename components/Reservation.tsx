@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Users, User, Phone, Send, ShoppingBag, Utensils, CheckCircle, AlertCircle, Home } from 'lucide-react';
+import { Calendar, Clock, Users, User, Phone, Send, ShoppingBag, Utensils, CheckCircle, AlertCircle, Home, CreditCard, Upload, FileText } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
 export const Reservation: React.FC = () => {
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [file, setFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     type: 'reserva' as 'reserva' | 'encomenda',
     date: '',
@@ -22,14 +23,44 @@ export const Reservation: React.FC = () => {
     });
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
+      if (selectedFile.type === 'application/pdf') {
+        setFile(selectedFile);
+      } else {
+        alert('Por favor, envie apenas arquivos PDF.');
+        e.target.value = ''; // Reset input
+      }
+    }
+  };
+
   const handleReservation = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmissionStatus('loading');
     setErrorMessage('');
 
     try {
-        // Removemos 'status' daqui e deixamos o banco usar o default 'pendente'
-        // Isso evita erros de permissão se a política de insert for restrita em colunas específicas
+        let fileUrl = null;
+
+        // 1. Upload do Arquivo (se existir)
+        if (file) {
+            const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.pdf`;
+            const { data: uploadData, error: uploadError } = await supabase.storage
+                .from('receipts')
+                .upload(fileName, file);
+
+            if (uploadError) throw uploadError;
+
+            // Obter URL pública
+            const { data: { publicUrl } } = supabase.storage
+                .from('receipts')
+                .getPublicUrl(fileName);
+            
+            fileUrl = publicUrl;
+        }
+
+        // 2. Inserir no Banco
         const { error } = await supabase
             .from('reservations')
             .insert([
@@ -40,7 +71,8 @@ export const Reservation: React.FC = () => {
                     time: formData.time,
                     guests: formData.guests,
                     type: formData.type,
-                    notes: formData.notes
+                    notes: formData.notes,
+                    file_url: fileUrl
                 }
             ]);
 
@@ -52,9 +84,9 @@ export const Reservation: React.FC = () => {
         setSubmissionStatus('error');
         
         if (error.message && error.message.includes('row-level security')) {
-            setErrorMessage('Erro de permissão (RLS). Por favor, peça ao admin para rodar o script de atualização no Supabase.');
+            setErrorMessage('Erro de permissão. Peça ao admin para atualizar o script SQL.');
         } else {
-            setErrorMessage(error.message || 'Erro ao conectar ao servidor. Tente novamente.');
+            setErrorMessage(error.message || 'Erro ao processar pedido. Tente novamente.');
         }
     }
   };
@@ -72,7 +104,7 @@ export const Reservation: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-            <div className="max-w-4xl mx-auto bg-[#0a0a0a]/95 backdrop-blur-md border border-[#BF953F]/30 p-8 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.8)] rounded-sm">
+            <div className="max-w-4xl mx-auto bg-[#0a0a0a]/95 backdrop-blur-md border border-[#BF953F]/30 p-8 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.8)] rounded-sm my-12">
                 <div className="text-center mb-10">
                     <h2 className="text-3xl md:text-5xl font-display font-bold text-white uppercase mb-4">
                         Faça seu <span className="text-gold-gradient">Pedido</span>
@@ -92,6 +124,7 @@ export const Reservation: React.FC = () => {
                                 onClick={() => {
                                     setSubmissionStatus('idle');
                                     setFormData({...formData, name: '', phone: '', notes: ''});
+                                    setFile(null);
                                 }}
                                 className="px-8 py-3 bg-[#BF953F] text-black font-bold uppercase tracking-widest hover:bg-[#FCF6BA] transition-colors"
                             >
@@ -228,6 +261,66 @@ export const Reservation: React.FC = () => {
                             </div>
                         </div>
 
+                        {/* Payment Information Block - Only for 'encomenda' */}
+                        {formData.type === 'encomenda' && (
+                            <div className="bg-white/5 border border-[#BF953F]/20 p-6 rounded-lg animate-[fadeIn_0.5s_ease-out]">
+                                <h3 className="text-[#BF953F] font-bold uppercase tracking-widest text-sm flex items-center gap-2 mb-4">
+                                    <CreditCard className="w-4 h-4" /> Dados para Pagamento
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div className="space-y-1">
+                                        <p className="text-gray-500 text-xs uppercase">Banco</p>
+                                        <p className="text-white font-bold">BAI</p>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <p className="text-gray-500 text-xs uppercase">Titular</p>
+                                        <p className="text-white font-bold">Sabores do Começo LDA</p>
+                                    </div>
+                                    <div className="space-y-1 md:col-span-2">
+                                        <p className="text-gray-500 text-xs uppercase">IBAN</p>
+                                        <p className="text-white font-mono tracking-wider bg-black/30 p-2 rounded border border-white/5 select-all">
+                                            AO06 0040 0000 1234 5678 9012 3
+                                        </p>
+                                    </div>
+                                    <div className="space-y-1 md:col-span-2">
+                                        <p className="text-gray-500 text-xs uppercase">Express / Multicaixa</p>
+                                        <p className="text-white font-mono tracking-wider bg-black/30 p-2 rounded border border-white/5 select-all">
+                                            923 000 000
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="mt-4 flex items-start gap-2 text-xs text-yellow-500/80 bg-yellow-900/10 p-2 rounded">
+                                    <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                                    <p>Para confirmar sua encomenda, por favor anexe o comprovativo de pagamento abaixo.</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* File Upload for PDF */}
+                        <div className="group">
+                             <label className="block text-xs text-[#BF953F] uppercase tracking-wider mb-2">
+                                {formData.type === 'encomenda' ? 'Anexar Comprovativo (PDF)' : 'Anexar Documento (Opcional - PDF)'}
+                             </label>
+                             <div className="relative">
+                                <input 
+                                    type="file" 
+                                    accept="application/pdf"
+                                    onChange={handleFileChange}
+                                    className="hidden" 
+                                    id="file-upload"
+                                />
+                                <label 
+                                    htmlFor="file-upload" 
+                                    className={`w-full flex items-center justify-between bg-white/5 border border-white/10 py-4 px-4 text-white cursor-pointer hover:bg-white/10 transition-colors rounded-sm ${file ? 'border-[#BF953F]' : ''}`}
+                                >
+                                    <span className={`text-sm ${file ? 'text-white' : 'text-gray-500'}`}>
+                                        {file ? file.name : 'Clique para selecionar um arquivo PDF...'}
+                                    </span>
+                                    {file ? <FileText className="w-5 h-5 text-[#BF953F]" /> : <Upload className="w-5 h-5 text-gray-500" />}
+                                </label>
+                            </div>
+                        </div>
+
                          {/* Notes Input */}
                          <div className="group">
                              <label className="block text-xs text-[#BF953F] uppercase tracking-wider mb-2">Observações / Detalhes do Pedido</label>
@@ -246,7 +339,7 @@ export const Reservation: React.FC = () => {
                             className="w-full py-5 mt-4 bg-gold-metallic text-black font-bold uppercase tracking-widest hover:shadow-[0_0_30px_rgba(191,149,63,0.4)] transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed rounded-sm"
                         >
                             {submissionStatus === 'loading' ? (
-                                <span className="animate-pulse">Enviando Dados...</span>
+                                <span className="animate-pulse">Enviando Dados e Arquivos...</span>
                             ) : (
                                 <>
                                     <Send className="w-5 h-5" />

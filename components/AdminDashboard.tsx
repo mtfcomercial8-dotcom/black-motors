@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 import { ReservationData } from '../types';
-import { Check, X, Clock, ShoppingBag, Utensils, RefreshCcw, LogOut, LayoutDashboard, AlertCircle, CalendarCheck, Archive } from 'lucide-react';
+import { Check, X, Clock, ShoppingBag, Utensils, RefreshCcw, LogOut, LayoutDashboard, AlertCircle, CalendarCheck, Archive, Trash2, FileText, Download } from 'lucide-react';
 
 interface AdminDashboardProps {
     onLogout: () => void;
@@ -41,9 +41,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             .eq('id', id);
 
         if (error) {
-            // Reverte se der erro (opcional, simplificado aqui)
             console.error("Erro ao atualizar status", error);
             fetchReservations(); 
+        }
+    };
+
+    const deleteOrder = async (id: number) => {
+        if (!window.confirm("Tem certeza que deseja eliminar este pedido? Esta ação não pode ser desfeita.")) return;
+
+        // Atualização otimista: remove da lista imediatamente
+        setReservations(prev => prev.filter(r => r.id !== id));
+
+        const { error } = await supabase
+            .from('reservations')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            console.error("Erro ao eliminar pedido", error);
+            alert("Erro ao eliminar o pedido do banco de dados.");
+            fetchReservations(); // Reverte se der erro
         }
     };
 
@@ -52,8 +69,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
         
         const channel = supabase
             .channel('reservations_channel')
-            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'reservations' }, (payload) => {
-                setReservations(prev => [payload.new as ReservationData, ...prev]);
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'reservations' }, () => {
+                // Em qualquer mudança (Insert/Update/Delete), recarrega
+                fetchReservations();
             })
             .subscribe();
 
@@ -225,12 +243,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                         </div>
                                     </div>
 
-                                    {res.notes && (
-                                        <div className="md:col-span-2 mt-2 p-3 bg-white/5 border border-white/5 rounded text-sm text-gray-300 italic">
-                                            <span className="text-xs text-gray-500 uppercase not-italic block mb-1">Observações:</span>
-                                            "{res.notes}"
-                                        </div>
-                                    )}
+                                    <div className="md:col-span-2 flex flex-col gap-2">
+                                        {res.notes && (
+                                            <div className="p-3 bg-white/5 border border-white/5 rounded text-sm text-gray-300 italic">
+                                                <span className="text-xs text-gray-500 uppercase not-italic block mb-1">Observações:</span>
+                                                "{res.notes}"
+                                            </div>
+                                        )}
+                                        {res.file_url && (
+                                            <a 
+                                                href={res.file_url} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 w-fit px-3 py-2 bg-[#BF953F]/10 border border-[#BF953F]/30 rounded text-[#BF953F] text-xs font-bold uppercase tracking-wider hover:bg-[#BF953F]/20 transition-colors"
+                                            >
+                                                <FileText className="w-4 h-4" />
+                                                <span className="mr-1">Ver/Baixar Anexo PDF</span>
+                                                <Download className="w-3 h-3" />
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
 
                                 {/* Actions */}
@@ -259,12 +291,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                         <div className="mt-auto opacity-50">
                                             <button 
                                                 onClick={() => updateStatus(res.id, 'pendente')}
-                                                className="text-xs text-gray-500 hover:text-white underline decoration-gray-700 underline-offset-4 transition-colors"
+                                                className="text-xs text-gray-500 hover:text-white underline decoration-gray-700 underline-offset-4 transition-colors mb-2"
                                             >
                                                 Reabrir Pedido
                                             </button>
                                         </div>
                                     )}
+
+                                    {/* Botão de Eliminar (Lixeira) */}
+                                    <button 
+                                        onClick={() => deleteOrder(res.id)}
+                                        className="mt-2 text-gray-600 hover:text-red-500 transition-colors p-2"
+                                        title="Eliminar Pedido da Base de Dados"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
                                 </div>
                             </div>
                         ))

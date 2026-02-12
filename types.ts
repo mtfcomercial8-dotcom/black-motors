@@ -33,6 +33,7 @@ export interface ReservationData {
   type: 'reserva' | 'encomenda';
   status: 'pendente' | 'confirmado' | 'cancelado';
   notes?: string;
+  file_url?: string;
 }
 
 export type PageType = 'home' | 'inventory' | 'reservation' | 'admin' | 'login';
