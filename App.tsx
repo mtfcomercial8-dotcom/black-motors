@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Featured } from './components/Featured';
@@ -15,11 +15,30 @@ import { LoadingScreen } from './components/LoadingScreen';
 import { Login } from './components/Login';
 import { MessageCircle } from 'lucide-react';
 import { PageType } from './types';
+import { supabase } from './lib/supabaseClient';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setIsAuthenticated(true);
+      }
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleNavigate = (page: PageType, sectionId?: string) => {
     // Protected Route Check
@@ -43,11 +62,13 @@ const App: React.FC = () => {
   };
 
   const handleLoginSuccess = () => {
+    // State is handled by onAuthStateChange, but we might want to redirect immediately
     setIsAuthenticated(true);
     setCurrentPage('admin');
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     setIsAuthenticated(false);
     setCurrentPage('home');
   };

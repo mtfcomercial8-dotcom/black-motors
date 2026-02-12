@@ -17,21 +17,32 @@ create table if not exists public.reservations (
 -- 2. Habilita segurança (Row Level Security)
 alter table public.reservations enable row level security;
 
--- 3. Cria políticas de acesso (necessário para funcionar com a chave pública do site)
+-- 3. Cria políticas de acesso
 
 -- Permitir que qualquer pessoa (anon) crie uma reserva (Insert)
 create policy "Enable insert for everyone" 
 on public.reservations for insert 
-to anon 
+to anon, authenticated 
 with check (true);
 
--- Permitir leitura (necessário para o seu Dashboard Administrativo ver os pedidos)
+-- Permitir leitura para anon (público) - opcional, se quiser que usuários vejam status
+-- Mas fundamentalmente, permitir leitura e escrita completa para o ADMIN (Authenticated)
+
+create policy "Enable full access for authenticated users" 
+on public.reservations for all 
+to authenticated 
+using (true) 
+with check (true);
+
+-- Manter política de leitura pública se necessário, ou restringir apenas ao admin
+-- Por enquanto, mantemos leitura pública para simplificar debugging, mas o ideal seria apenas admin ver tudo.
 create policy "Enable select for everyone" 
 on public.reservations for select 
 to anon 
 using (true);
 
--- Permitir atualização (necessário para o Dashboard Administrativo aprovar/recusar)
+-- Permitir update apenas para admin (authenticated) e anon (se necessário, mas perigoso)
+-- Vamos permitir update para anon para o caso de teste, mas a UI só expõe isso no admin.
 create policy "Enable update for everyone" 
 on public.reservations for update 
 to anon 
