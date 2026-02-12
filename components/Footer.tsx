@@ -1,8 +1,9 @@
 import React from 'react';
 import { Instagram, Facebook, Phone, MapPin, Mail, Lock } from 'lucide-react';
+import { PageType } from '../types';
 
 interface FooterProps {
-  onNavigate: (page: 'home' | 'inventory' | 'reservation' | 'admin', sectionId?: string) => void;
+  onNavigate: (page: PageType, sectionId?: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
@@ -61,8 +62,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     <p>&copy; {new Date().getFullYear()} Sabores do Começo. Todos os direitos reservados.</p>
                     <div className="flex items-center gap-4 mt-4 md:mt-0">
                          <p>Gastronomia inspirada no Futuro</p>
-                         <button onClick={() => onNavigate('admin')} className="opacity-20 hover:opacity-100 transition-opacity" title="Acesso Administrativo">
+                         <button onClick={() => onNavigate('admin')} className="flex items-center gap-2 text-gray-600 hover:text-[#BF953F] transition-colors" title="Acesso Administrativo">
                             <Lock className="w-3 h-3" />
+                            <span className="text-[10px]">Área Restrita</span>
                          </button>
                     </div>
                 </div>

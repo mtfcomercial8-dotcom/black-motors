@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronDown, ArrowRight } from 'lucide-react';
+import { PageType } from '../types';
 
 interface HeroProps {
-  onNavigate: (page: 'home' | 'inventory' | 'reservation' | 'admin', sectionId?: string) => void;
+  onNavigate: (page: PageType, sectionId?: string) => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {

@@ -12,13 +12,22 @@ import { Newsletter } from './components/Newsletter';
 import { Footer } from './components/Footer';
 import { AdminDashboard } from './components/AdminDashboard';
 import { LoadingScreen } from './components/LoadingScreen';
+import { Login } from './components/Login';
 import { MessageCircle } from 'lucide-react';
+import { PageType } from './types';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState<'home' | 'inventory' | 'reservation' | 'admin'>('home');
+  const [currentPage, setCurrentPage] = useState<PageType>('home');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleNavigate = (page: 'home' | 'inventory' | 'reservation' | 'admin', sectionId?: string) => {
+  const handleNavigate = (page: PageType, sectionId?: string) => {
+    // Protected Route Check
+    if (page === 'admin' && !isAuthenticated) {
+      setCurrentPage('login');
+      return;
+    }
+
     setCurrentPage(page);
     
     if (page === 'home' && sectionId) {
@@ -31,6 +40,16 @@ const App: React.FC = () => {
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  };
+
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+    setCurrentPage('admin');
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentPage('home');
   };
 
   return (
@@ -62,27 +81,32 @@ const App: React.FC = () => {
                <Reservation />
             </div>
           )}
+          {currentPage === 'login' && (
+             <Login onLogin={handleLoginSuccess} onNavigate={handleNavigate} />
+          )}
           {currentPage === 'admin' && (
             <div className="min-h-screen bg-brand-black">
-               <AdminDashboard />
+               <AdminDashboard onLogout={handleLogout} />
             </div>
           )}
         </main>
         
-        {currentPage !== 'admin' && <Footer onNavigate={handleNavigate} />}
+        {currentPage !== 'admin' && currentPage !== 'login' && <Footer onNavigate={handleNavigate} />}
 
-        {/* Floating Action Button (WhatsApp Style) */}
-        <a 
-          href="https://wa.me/244923000000" 
-          target="_blank" 
-          rel="noreferrer"
-          className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.5)] hover:scale-110 transition-transform duration-300 group"
-        >
-          <MessageCircle className="w-6 h-6" />
-          <span className="absolute right-full mr-4 bg-white text-black px-3 py-1 rounded text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 top-1/2 transform -translate-y-1/2">
-              Suporte
-          </span>
-        </a>
+        {/* Floating Action Button (WhatsApp Style) - Hide on Admin/Login */}
+        {currentPage !== 'admin' && currentPage !== 'login' && (
+          <a 
+            href="https://wa.me/244923000000" 
+            target="_blank" 
+            rel="noreferrer"
+            className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.5)] hover:scale-110 transition-transform duration-300 group"
+          >
+            <MessageCircle className="w-6 h-6" />
+            <span className="absolute right-full mr-4 bg-white text-black px-3 py-1 rounded text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 top-1/2 transform -translate-y-1/2">
+                Suporte
+            </span>
+          </a>
+        )}
       </div>
     </>
   );

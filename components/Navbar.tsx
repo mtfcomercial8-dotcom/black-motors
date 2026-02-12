@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, UtensilsCrossed } from 'lucide-react';
-import { NavItem } from '../types';
+import { Menu, X, UtensilsCrossed, User } from 'lucide-react';
+import { NavItem, PageType } from '../types';
 
 const navItems: NavItem[] = [
   { label: 'Início', href: '#hero' },
   { label: 'O Chef', href: '#about' },
   { label: 'Experiências', href: '#services' },
   { label: 'Menu', href: '#inventory' },
-  { label: 'Reservas', href: '#reservation' }, // Changed from Contato to Reservas
+  { label: 'Reservas', href: '#reservation' },
 ];
 
 interface NavbarProps {
-  onNavigate: (page: 'home' | 'inventory' | 'reservation' | 'admin', sectionId?: string) => void;
-  currentPage: 'home' | 'inventory' | 'reservation' | 'admin';
+  onNavigate: (page: PageType, sectionId?: string) => void;
+  currentPage: PageType;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
@@ -39,6 +39,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
       onNavigate('home', href);
     }
   };
+
+  // Don't show Navbar on Login page
+  if (currentPage === 'login') return null;
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled || currentPage !== 'home' ? 'bg-black/90 backdrop-blur-md border-b border-white/10 py-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)]' : 'bg-transparent py-6'}`}>
@@ -78,16 +81,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
               }`}></span>
             </a>
           ))}
-          <button 
-            className="relative px-6 py-2 group overflow-hidden"
-            onClick={() => onNavigate('reservation')}
-          >
-            <div className="absolute inset-0 bg-gold-metallic opacity-20 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="absolute inset-0 border border-[#BF953F] group-hover:border-[#FCF6BA] transition-colors duration-300"></div>
-            <span className="relative z-10 text-[#FCF6BA] group-hover:text-black uppercase text-xs tracking-widest font-bold font-display transition-colors duration-300">
-              Reservar Agora
-            </span>
-          </button>
+          
+          <div className="flex items-center gap-4">
+             <button 
+              onClick={() => onNavigate('admin')}
+              className="text-gray-400 hover:text-[#BF953F] transition-colors p-2"
+              title="Área do Cliente / Login"
+            >
+              <User className="w-5 h-5" />
+            </button>
+            
+            <button 
+              className="relative px-6 py-2 group overflow-hidden"
+              onClick={() => onNavigate('reservation')}
+            >
+              <div className="absolute inset-0 bg-gold-metallic opacity-20 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 border border-[#BF953F] group-hover:border-[#FCF6BA] transition-colors duration-300"></div>
+              <span className="relative z-10 text-[#FCF6BA] group-hover:text-black uppercase text-xs tracking-widest font-bold font-display transition-colors duration-300">
+                Reservar Agora
+              </span>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Toggle */}
@@ -112,6 +126,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
               {item.label}
             </a>
           ))}
+          <button 
+             onClick={() => { setIsMenuOpen(false); onNavigate('admin'); }}
+             className="text-lg font-display uppercase text-left text-white hover:text-[#BF953F] flex items-center gap-2"
+          >
+             <User className="w-5 h-5" /> Login / Admin
+          </button>
         </div>
       </div>
     </nav>

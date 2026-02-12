@@ -34,3 +34,5 @@ export interface ReservationData {
   status: 'pendente' | 'confirmado' | 'cancelado';
   notes?: string;
 }
+
+export type PageType = 'home' | 'inventory' | 'reservation' | 'admin' | 'login';
