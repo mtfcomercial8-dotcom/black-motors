@@ -28,6 +28,8 @@ export const Reservation: React.FC = () => {
     setErrorMessage('');
 
     try {
+        // Removemos 'status' daqui e deixamos o banco usar o default 'pendente'
+        // Isso evita erros de permissão se a política de insert for restrita em colunas específicas
         const { error } = await supabase
             .from('reservations')
             .insert([
@@ -38,7 +40,6 @@ export const Reservation: React.FC = () => {
                     time: formData.time,
                     guests: formData.guests,
                     type: formData.type,
-                    status: 'pendente',
                     notes: formData.notes
                 }
             ]);
@@ -50,9 +51,8 @@ export const Reservation: React.FC = () => {
         console.error('Error inserting reservation:', error);
         setSubmissionStatus('error');
         
-        // Mensagens de erro amigáveis
         if (error.message && error.message.includes('row-level security')) {
-            setErrorMessage('Erro de permissão no banco de dados. Por favor, contate o administrador.');
+            setErrorMessage('Erro de permissão (RLS). Por favor, peça ao admin para rodar o script de atualização no Supabase.');
         } else {
             setErrorMessage(error.message || 'Erro ao conectar ao servidor. Tente novamente.');
         }
