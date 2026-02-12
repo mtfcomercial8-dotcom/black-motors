@@ -1,100 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { Car } from '../types';
-import { Gauge, Calendar, Zap, ArrowUpRight } from 'lucide-react';
+import { Clock, Flame, Utensils, ArrowUpRight, Filter } from 'lucide-react';
 
-const cars: Car[] = [
+const dishes: Car[] = [
   {
     id: 1,
-    name: "Land Cruiser LC300",
-    brand: "Toyota",
-    year: 2024,
-    price: "Sob Consulta",
-    features: ["V6 Twin-Turbo", "GR Sport", "0km"],
-    image: "https://i.postimg.cc/VkdCsDCj/573183476-17882799537400240-2328421518204069278-n.jpg"
+    name: "Wagyu A5 Gold",
+    brand: "Cortes Nobres",
+    year: "30 min",
+    price: "25.000 KZ",
+    features: ["Wagyu Japão", "Folha de Ouro", "Trufas"],
+    image: "https://images.unsplash.com/photo-1546833998-877b37c2e5c4?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 2,
-    name: "Lexus LX 600",
-    brand: "Lexus",
-    year: 2024,
-    price: "Sob Consulta",
-    features: ["VIP Edition", "V6 Turbo", "Ultra Luxury"],
-    image: "https://i.postimg.cc/W1FdctRL/588512416-17888293113400240-565333317880983856-n.jpg"
+    name: "Lagosta Thermidor",
+    brand: "Frutos do Mar",
+    year: "45 min",
+    price: "18.000 KZ",
+    features: ["Lagosta Fresca", "Queijo Gruyère", "Ervas Finas"],
+    image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 3,
-    name: "Prado VX-L",
-    brand: "Toyota",
-    year: 2025,
-    price: "Sob Consulta",
-    features: ["Diesel D-4D", "4x4", "Black Pack"],
-    image: "https://i.postimg.cc/59syH81R/599495475-17887812369400240-3675555262069311108-n.jpg"
+    name: "Risoto de Açafrão",
+    brand: "Prato Principal",
+    year: "25 min",
+    price: "12.000 KZ",
+    features: ["Arroz Arbóreo", "Açafrão Real", "Parmesão"],
+    image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 4,
-    name: "Fortuner GR-S",
-    brand: "Toyota",
-    year: 2024,
+    name: "Caviar Beluga",
+    brand: "Entradas",
+    year: "10 min",
     price: "Sob Consulta",
-    features: ["Sport Tuned", "224 HP", "Leather"],
-    image: "https://i.postimg.cc/MTWZHpLc/599864913-17887722840400240-7779305653126395731-n.jpg"
+    features: ["Caviar Importado", "Blinis", "Creme Azedo"],
+    image: "https://images.unsplash.com/photo-1625937751876-4515cd8e7752?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 5,
-    name: "Hilux GR Sport",
-    brand: "Toyota",
-    year: 2024,
-    price: "Sob Consulta",
-    features: ["Wide Track", "Suspension+", "JBL Audio"],
-    image: "https://i.postimg.cc/HxZmL45Z/602985793-17888622564400240-3406813203303493612-n.jpg"
+    name: "Tiramisu Gold",
+    brand: "Sobremesa",
+    year: "15 min",
+    price: "6.000 KZ",
+    features: ["Mascarpone", "Café Arábica", "Cacau"],
+    image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 6,
-    name: "Range Rover",
-    brand: "Land Rover",
-    year: 2024,
+    name: "Vinho Château Margaux",
+    brand: "Adega",
+    year: "Safra 2015",
     price: "Sob Consulta",
-    features: ["Autobiography", "P530", "Exec Class"],
-    image: "https://i.postimg.cc/wvGKzx8Z/603057709-17888622210400240-8920537023901278805-n.jpg"
+    features: ["Tinto", "França", "Encorpado"],
+    image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 7,
-    name: "G 63 AMG",
-    brand: "Mercedes-Benz",
-    year: 2023,
-    price: "Sob Consulta",
-    features: ["V8 Biturbo", "Night Pkg", "Carbon"],
-    image: "https://i.postimg.cc/jj8qWbYg/509680605-593791197115587-4192616528417946862-n.jpg"
+    name: "Salmão Grelhado",
+    brand: "Frutos do Mar",
+    year: "25 min",
+    price: "14.000 KZ",
+    features: ["Salmão Fresco", "Aspargos", "Molho Citrico"],
+    image: "https://images.unsplash.com/photo-1467003909585-2f8a7270028d?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 8,
-    name: "Land Cruiser 79",
-    brand: "Toyota",
-    year: 2024,
-    price: "Sob Consulta",
-    features: ["V8 Diesel", "Namib Edition", "4x4"],
-    image: "https://i.postimg.cc/9Fdzbsjy/599525265-17887946079400240-1779273656960371058-n.jpg"
+    name: "Carré de Cordeiro",
+    brand: "Cortes Nobres",
+    year: "40 min",
+    price: "19.500 KZ",
+    features: ["Cordeiro", "Hortelã", "Purê Rústico"],
+    image: "https://images.unsplash.com/photo-1544025162-d76690b6d029?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 9,
-    name: "Lexus LX 500d",
-    brand: "Lexus",
-    year: 2024,
-    price: "Sob Consulta",
-    features: ["F-Sport", "Diesel", "Black Ed."],
-    image: "https://i.postimg.cc/28hLJVnj/601765087-17888293083400240-8636408631964467256-n.jpg"
+    name: "Sushi Premium Set",
+    brand: "Japonês",
+    year: "20 min",
+    price: "22.000 KZ",
+    features: ["Peixe Fresco", "Sashimi", "Nigiri"],
+    image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=1000&auto=format&fit=crop"
   }
 ];
 
-const CarCard: React.FC<{ car: Car; index: number }> = ({ car, index }) => {
+const categories = ['Todos', ...new Set(dishes.map(d => d.brand))];
+
+const DishCard: React.FC<{ car: Car; index: number }> = ({ car, index }) => {
   const { elementRef, isVisible } = useIntersectionObserver();
 
   return (
     <div 
       ref={elementRef}
       className={`group relative bg-[#0a0a0a] border border-white/5 overflow-hidden transition-all duration-700 transform hover:-translate-y-2 hover:shadow-[0_0_25px_rgba(191,149,63,0.15)] ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
-      style={{ transitionDelay: `${index * 100}ms` }}
+      style={{ transitionDelay: `${index * 50}ms` }}
     >
       {/* Golden Border Gradient on Hover */}
       <div className="absolute inset-0 border border-transparent group-hover:border-[#BF953F]/50 transition-colors duration-500 z-10 pointer-events-none"></div>
@@ -120,22 +122,22 @@ const CarCard: React.FC<{ car: Car; index: number }> = ({ car, index }) => {
         
         <div className="mt-4 flex gap-3 text-gray-400 text-xs mb-6 border-b border-white/5 pb-4 flex-wrap">
             <div className="flex items-center gap-1 bg-white/5 px-2 py-1 rounded">
-                <Calendar className="w-3 h-3 text-[#BF953F]" />
+                <Clock className="w-3 h-3 text-[#BF953F]" />
                 {car.year}
             </div>
              <div className="flex items-center gap-1 bg-white/5 px-2 py-1 rounded">
-                <Zap className="w-3 h-3 text-[#BF953F]" />
+                <Utensils className="w-3 h-3 text-[#BF953F]" />
                 {car.features[0]}
             </div>
              <div className="flex items-center gap-1 bg-white/5 px-2 py-1 rounded">
-                <Gauge className="w-3 h-3 text-[#BF953F]" />
+                <Flame className="w-3 h-3 text-[#BF953F]" />
                 {car.features[2]}
             </div>
         </div>
 
         <div className="flex justify-between items-end">
             <div>
-                <p className="text-xs uppercase tracking-widest text-[#BF953F] mb-1">Preço</p>
+                <p className="text-xs uppercase tracking-widest text-[#BF953F] mb-1">Valor</p>
                 <p className="text-lg font-bold text-white group-hover:text-[#FCF6BA] transition-colors">{car.price}</p>
             </div>
             <button className="w-10 h-10 rounded-full bg-white/5 group-hover:bg-gold-metallic flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:text-black border border-white/10 group-hover:border-transparent">
@@ -151,28 +153,51 @@ const CarCard: React.FC<{ car: Car; index: number }> = ({ car, index }) => {
 };
 
 export const Inventory: React.FC = () => {
+  const [activeCategory, setActiveCategory] = useState('Todos');
+
+  const filteredDishes = activeCategory === 'Todos' 
+    ? dishes 
+    : dishes.filter(dish => dish.brand === activeCategory);
+
   return (
     <section id="inventory" className="py-24 bg-brand-black relative">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col items-center text-center mb-16">
+        <div className="flex flex-col items-center text-center mb-12">
             <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4 uppercase">
-                Estoque <span className="text-gold-gradient">Atualizado</span>
+                Menu <span className="text-gold-gradient">Exclusivo</span>
             </h2>
             <div className="h-1 w-24 bg-gold-metallic mb-6"></div>
-            <p className="text-gray-400 max-w-xl">
-              Nossa seleção curada dos veículos mais desejados de Angola. Qualidade, procedência e exclusividade garantida.
+            <p className="text-gray-400 max-w-xl mb-10">
+              Uma seleção curada dos pratos mais desejados. Selecione uma categoria abaixo para explorar nossos sabores.
             </p>
+
+            {/* Filters */}
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-6 py-2 border transition-all duration-300 uppercase text-xs tracking-widest font-bold ${
+                    activeCategory === category
+                      ? 'bg-gold-metallic text-black border-[#BF953F] shadow-[0_0_15px_rgba(191,149,63,0.4)]'
+                      : 'bg-transparent text-gray-400 border-white/10 hover:border-[#BF953F] hover:text-[#FCF6BA]'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {cars.map((car, index) => (
-                <CarCard key={car.id} car={car} index={index} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[500px]">
+            {filteredDishes.map((dish, index) => (
+                <DishCard key={dish.id} car={dish} index={index} />
             ))}
         </div>
         
          <div className="mt-16 text-center">
              <a href="#contact" className="inline-flex px-8 py-3 border border-[#BF953F] text-[#FCF6BA] uppercase text-sm tracking-widest hover:bg-[#BF953F] hover:text-black transition-all duration-300">
-                Falar com um consultor
+                Ver Carta Completa em PDF
             </a>
          </div>
       </div>

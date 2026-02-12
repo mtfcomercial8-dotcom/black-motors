@@ -1,18 +1,18 @@
 import React from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
-const featuredCars = [
+const featuredDishes = [
   {
-    image: "https://i.postimg.cc/DZP1t09s/523935194-1073335728106542-8462685573564621876-n.jpg",
-    label: "Design Exclusivo"
+    image: "https://images.unsplash.com/photo-1544025162-d76690b6d029?q=80&w=1000&auto=format&fit=crop",
+    label: "Fusion Cuisine"
   },
   {
-    image: "https://i.postimg.cc/KYXLjtFr/1769857257.png",
-    label: "Alta Performance"
+    image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1000&auto=format&fit=crop",
+    label: "Cortes Premium"
   },
   {
-    image: "https://i.postimg.cc/xC5b67ms/520992981-646857705092804-1035826799427051737-n.jpg",
-    label: "Luxo Supremo"
+    image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?q=80&w=1000&auto=format&fit=crop",
+    label: "Adega Exclusiva"
   }
 ];
 
@@ -23,9 +23,9 @@ export const Featured: React.FC = () => {
     <section className="py-20 bg-[#080808] relative border-b border-white/5">
       <div className="container mx-auto px-6">
         <div className="mb-12 text-center">
-            <span className="text-[#BF953F] uppercase tracking-[0.2em] text-xs font-bold">Showroom</span>
+            <span className="text-[#BF953F] uppercase tracking-[0.2em] text-xs font-bold">Experiência</span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-white mt-2 uppercase">
-                Novas <span className="text-gold-gradient">Aquisições</span>
+                O Chef <span className="text-gold-gradient">Recomenda</span>
             </h2>
         </div>
 
@@ -33,7 +33,7 @@ export const Featured: React.FC = () => {
           ref={elementRef}
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
-          {featuredCars.map((car, index) => (
+          {featuredDishes.map((dish, index) => (
             <div 
               key={index}
               className={`group relative h-64 md:h-80 overflow-hidden border border-white/10 rounded-sm cursor-pointer transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
@@ -42,8 +42,8 @@ export const Featured: React.FC = () => {
               {/* Image */}
               <div className="absolute inset-0 bg-gray-900">
                   <img 
-                    src={car.image} 
-                    alt={car.label} 
+                    src={dish.image} 
+                    alt={dish.label} 
                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-out"
                   />
               </div>
@@ -58,7 +58,7 @@ export const Featured: React.FC = () => {
               <div className="absolute bottom-0 left-0 w-full p-6 z-20 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                 <div className="h-0.5 w-8 bg-gold-metallic mb-3 group-hover:w-16 transition-all duration-500"></div>
                 <h3 className="text-xl font-display font-bold text-white uppercase tracking-wider group-hover:text-[#FCF6BA] transition-colors">
-                    {car.label}
+                    {dish.label}
                 </h3>
               </div>
             </div>

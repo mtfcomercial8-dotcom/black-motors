@@ -3,21 +3,25 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Featured } from './components/Featured';
 import { About } from './components/About';
+import { ChefSpotlight } from './components/ChefSpotlight';
 import { Services } from './components/Services';
 import { Inventory } from './components/Inventory';
+import { Testimonials } from './components/Testimonials';
+import { Reservation } from './components/Reservation';
+import { Newsletter } from './components/Newsletter';
 import { Footer } from './components/Footer';
+import { AdminDashboard } from './components/AdminDashboard';
 import { LoadingScreen } from './components/LoadingScreen';
 import { MessageCircle } from 'lucide-react';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState<'home' | 'inventory'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'inventory' | 'reservation' | 'admin'>('home');
 
-  const handleNavigate = (page: 'home' | 'inventory', sectionId?: string) => {
+  const handleNavigate = (page: 'home' | 'inventory' | 'reservation' | 'admin', sectionId?: string) => {
     setCurrentPage(page);
     
     if (page === 'home' && sectionId) {
-      // Pequeno delay para garantir que o componente foi renderizado antes do scroll
       setTimeout(() => {
         const element = document.getElementById(sectionId.replace('#', ''));
         if (element) {
@@ -36,20 +40,36 @@ const App: React.FC = () => {
       <div className={`bg-brand-black min-h-screen text-white selection:bg-[#BF953F] selection:text-black transition-opacity duration-700 ${isLoading ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
         <Navbar onNavigate={handleNavigate} currentPage={currentPage} />
         <main>
-          {currentPage === 'home' ? (
+          {currentPage === 'home' && (
             <>
               <Hero onNavigate={handleNavigate} />
               <Featured />
               <About />
+              <ChefSpotlight />
               <Services />
+              <Testimonials />
+              <Newsletter />
             </>
-          ) : (
+          )}
+          {currentPage === 'inventory' && (
             <div className="pt-20 min-h-screen bg-brand-black">
                <Inventory />
+               <Newsletter />
+            </div>
+          )}
+          {currentPage === 'reservation' && (
+            <div className="pt-20 min-h-screen bg-brand-black">
+               <Reservation />
+            </div>
+          )}
+          {currentPage === 'admin' && (
+            <div className="min-h-screen bg-brand-black">
+               <AdminDashboard />
             </div>
           )}
         </main>
-        <Footer onNavigate={handleNavigate} />
+        
+        {currentPage !== 'admin' && <Footer onNavigate={handleNavigate} />}
 
         {/* Floating Action Button (WhatsApp Style) */}
         <a 
@@ -60,7 +80,7 @@ const App: React.FC = () => {
         >
           <MessageCircle className="w-6 h-6" />
           <span className="absolute right-full mr-4 bg-white text-black px-3 py-1 rounded text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 top-1/2 transform -translate-y-1/2">
-              Fale no WhatsApp
+              Suporte
           </span>
         </a>
       </div>

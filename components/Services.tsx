@@ -1,27 +1,27 @@
 import React from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-import { Wrench, Shield, Droplets, Gem } from 'lucide-react';
+import { Utensils, Wine, PartyPopper, ChefHat } from 'lucide-react';
 
 const services = [
     {
-        icon: <Gem className="w-8 h-8" />,
-        title: "Venda Premium",
-        description: "Acesso aos veículos mais exclusivos do mercado mundial, com processo de importação transparente e seguro."
+        icon: <Utensils className="w-8 h-8" />,
+        title: "Jantar à La Carte",
+        description: "Um menu cuidadosamente elaborado com ingredientes locais e importados, preparado por nossos chefs premiados."
     },
     {
-        icon: <Wrench className="w-8 h-8" />,
-        title: "Customização",
-        description: "Transforme seu veículo em uma obra de arte única com nossos serviços de tuning e modificação estética."
+        icon: <PartyPopper className="w-8 h-8" />,
+        title: "Eventos Privados",
+        description: "Transforme sua celebração em um momento inesquecível com nosso salão exclusivo e menu personalizado."
     },
     {
-        icon: <Droplets className="w-8 h-8" />,
-        title: "Estética Automotiva",
-        description: "Detalhamento completo, polimento técnico e proteção cerâmica para manter o brilho de showroom."
+        icon: <Wine className="w-8 h-8" />,
+        title: "Carta de Vinhos",
+        description: "Uma seleção rigorosa dos melhores rótulos do mundo, harmonizados perfeitamente com nossos pratos."
     },
     {
-        icon: <Shield className="w-8 h-8" />,
-        title: "Blindagem",
-        description: "Tecnologia de ponta em proteção balística, garantindo segurança máxima sem comprometer a performance."
+        icon: <ChefHat className="w-8 h-8" />,
+        title: "Chef em Casa",
+        description: "Leve a experiência do Sabores do Começo para sua residência com nosso serviço exclusivo de personal chef."
     }
 ];
 

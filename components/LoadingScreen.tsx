@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CarFront } from 'lucide-react';
+import { UtensilsCrossed } from 'lucide-react';
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -32,7 +32,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       {/* Animated Logo Container */}
       <div className="relative mb-12">
         <div className="absolute inset-0 bg-[#BF953F] blur-2xl opacity-20 animate-pulse"></div>
-        <CarFront className="w-20 h-20 text-[#FCF6BA] relative z-10 drop-shadow-[0_0_15px_rgba(191,149,63,0.5)]" />
+        <UtensilsCrossed className="w-20 h-20 text-[#FCF6BA] relative z-10 drop-shadow-[0_0_15px_rgba(191,149,63,0.5)]" />
         
         {/* Orbiting rings */}
         <div className="absolute inset-[-20%] border border-[#BF953F]/30 rounded-full animate-[spin_3s_linear_infinite]"></div>
@@ -41,11 +41,11 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       
       {/* Text */}
       <div className="text-center mb-10 overflow-hidden">
-        <h1 className="font-display font-bold text-4xl md:text-5xl tracking-[0.2em] text-white animate-[slideUp_0.5s_ease-out]">
-          BLACK<span className="text-gold-gradient">MOTORS</span>
+        <h1 className="font-display font-bold text-3xl md:text-5xl tracking-[0.2em] text-white animate-[slideUp_0.5s_ease-out]">
+          SABORES<span className="text-gold-gradient">DOCOMEÇO</span>
         </h1>
         <p className="text-gray-500 text-xs uppercase tracking-[0.5em] mt-2 animate-[fadeIn_1s_ease-out_0.3s_forwards] opacity-0">
-          Premium Automotive Art
+          Experiência Gastronômica
         </p>
       </div>
 
