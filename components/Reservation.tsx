@@ -49,7 +49,13 @@ export const Reservation: React.FC = () => {
     } catch (error: any) {
         console.error('Error inserting reservation:', error);
         setSubmissionStatus('error');
-        setErrorMessage(error.message || 'Erro ao conectar ao servidor. Tente novamente.');
+        
+        // Mensagens de erro amigáveis
+        if (error.message && error.message.includes('row-level security')) {
+            setErrorMessage('Erro de permissão no banco de dados. Por favor, contate o administrador.');
+        } else {
+            setErrorMessage(error.message || 'Erro ao conectar ao servidor. Tente novamente.');
+        }
     }
   };
 
