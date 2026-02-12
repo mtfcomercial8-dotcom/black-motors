@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 import { ReservationData } from '../types';
 import { Check, X, Clock, ShoppingBag, Utensils, RefreshCcw, Lock } from 'lucide-react';
@@ -10,7 +10,7 @@ export const AdminDashboard: React.FC = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
 
-    const fetchReservations = async () => {
+    const fetchReservations = useCallback(async () => {
         setIsLoading(true);
         if (!isSupabaseConfigured()) {
             setIsLoading(false);
@@ -32,7 +32,7 @@ export const AdminDashboard: React.FC = () => {
             setReservations(data as ReservationData[]);
         }
         setIsLoading(false);
-    };
+    }, [filter]);
 
     const updateStatus = async (id: number, newStatus: 'confirmado' | 'cancelado') => {
         const { error } = await supabase
@@ -62,7 +62,7 @@ export const AdminDashboard: React.FC = () => {
                 supabase.removeChannel(channel);
             };
         }
-    }, [isAuthenticated, filter]);
+    }, [isAuthenticated, fetchReservations]);
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { Car } from '../types';
-import { Clock, Flame, Utensils, ArrowUpRight, Filter } from 'lucide-react';
+import { Clock, Flame, Utensils, ArrowUpRight } from 'lucide-react';
 
 const dishes: Car[] = [
   {
