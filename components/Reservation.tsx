@@ -61,6 +61,11 @@ export const Reservation: React.FC = () => {
         }
 
         // 2. Inserir no Banco
+        // Append file URL to notes since 'file_url' column might not exist
+        const finalNotes = fileUrl 
+            ? `${formData.notes}\n\n[Comprovativo]: ${fileUrl}`
+            : formData.notes;
+
         const { error } = await supabase
             .from('reservations')
             .insert([
@@ -71,8 +76,7 @@ export const Reservation: React.FC = () => {
                     time: formData.time,
                     guests: formData.guests,
                     type: formData.type,
-                    notes: formData.notes,
-                    file_url: fileUrl
+                    notes: finalNotes
                 }
             ]);
 
