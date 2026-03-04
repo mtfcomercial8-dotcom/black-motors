@@ -98,8 +98,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             'confirmed': 'confirmado'
         };
         
-        const dbStatus = statusMap[activeTab];
-        return reservations.filter(r => r.status === dbStatus);
+        const targetStatus = statusMap[activeTab];
+        
+        return reservations.filter(r => {
+            // Normalize status for comparison (trim and lowercase)
+            const currentStatus = (r.status || '').toLowerCase().trim();
+            return currentStatus === targetStatus;
+        });
     }, [reservations, activeTab]);
 
     return (
@@ -253,9 +258,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                     <div className="md:col-span-2 flex flex-col gap-2">
                                         {(() => {
                                             // Extract file URL from notes if present
-                                            const fileUrlMatch = res.notes?.match(/\[Comprovativo\]: (https?:\/\/[^\s]+)/);
+                                            // Regex looks for [Comprovativo]: URL (handling optional spaces)
+                                            const fileUrlMatch = res.notes?.match(/\[Comprovativo\]:\s*(https?:\/\/[^\s]+)/i);
                                             const fileUrl = fileUrlMatch ? fileUrlMatch[1] : (res as any).file_url;
-                                            const cleanNotes = res.notes?.replace(/\[Comprovativo\]: https?:\/\/[^\s]+/, '').trim();
+                                            
+                                            // Remove the specific line containing the proof link
+                                            const cleanNotes = res.notes?.replace(/\[Comprovativo\]:\s*https?:\/\/[^\s]+/i, '').trim();
 
                                             return (
                                                 <>
