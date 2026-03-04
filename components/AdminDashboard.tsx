@@ -92,7 +92,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
     // Filtra a lista baseada na aba ativa
     const filteredList = useMemo(() => {
         if (activeTab === 'all') return reservations;
-        return reservations.filter(r => r.status === activeTab);
+        
+        const statusMap: Record<string, string> = {
+            'pending': 'pendente',
+            'confirmed': 'confirmado'
+        };
+        
+        const dbStatus = statusMap[activeTab];
+        return reservations.filter(r => r.status === dbStatus);
     }, [reservations, activeTab]);
 
     return (
@@ -244,24 +251,35 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                                     </div>
 
                                     <div className="md:col-span-2 flex flex-col gap-2">
-                                        {res.notes && (
-                                            <div className="p-3 bg-white/5 border border-white/5 rounded text-sm text-gray-300 italic">
-                                                <span className="text-xs text-gray-500 uppercase not-italic block mb-1">Observações:</span>
-                                                "{res.notes}"
-                                            </div>
-                                        )}
-                                        {res.file_url && (
-                                            <a 
-                                                href={res.file_url} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-2 w-fit px-3 py-2 bg-[#BF953F]/10 border border-[#BF953F]/30 rounded text-[#BF953F] text-xs font-bold uppercase tracking-wider hover:bg-[#BF953F]/20 transition-colors"
-                                            >
-                                                <FileText className="w-4 h-4" />
-                                                <span className="mr-1">Ver/Baixar Anexo PDF</span>
-                                                <Download className="w-3 h-3" />
-                                            </a>
-                                        )}
+                                        {(() => {
+                                            // Extract file URL from notes if present
+                                            const fileUrlMatch = res.notes?.match(/\[Comprovativo\]: (https?:\/\/[^\s]+)/);
+                                            const fileUrl = fileUrlMatch ? fileUrlMatch[1] : (res as any).file_url;
+                                            const cleanNotes = res.notes?.replace(/\[Comprovativo\]: https?:\/\/[^\s]+/, '').trim();
+
+                                            return (
+                                                <>
+                                                    {cleanNotes && (
+                                                        <div className="p-3 bg-white/5 border border-white/5 rounded text-sm text-gray-300 italic">
+                                                            <span className="text-xs text-gray-500 uppercase not-italic block mb-1">Observações:</span>
+                                                            "{cleanNotes}"
+                                                        </div>
+                                                    )}
+                                                    {fileUrl && (
+                                                        <a 
+                                                            href={fileUrl} 
+                                                            target="_blank" 
+                                                            rel="noopener noreferrer"
+                                                            className="flex items-center gap-2 w-fit px-4 py-3 bg-[#BF953F]/10 border border-[#BF953F] rounded text-[#BF953F] text-xs font-bold uppercase tracking-wider hover:bg-[#BF953F] hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(191,149,63,0.2)]"
+                                                        >
+                                                            <FileText className="w-4 h-4" />
+                                                            <span>Ver Comprovativo (PDF)</span>
+                                                            <Download className="w-4 h-4 ml-1" />
+                                                        </a>
+                                                    )}
+                                                </>
+                                            );
+                                        })()}
                                     </div>
                                 </div>
 
