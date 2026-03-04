@@ -23,11 +23,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       <div 
         className="absolute inset-0 z-0"
         style={{
-          background: 'radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)',
+          backgroundImage: 'url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           transform: `translateY(${offset * 0.5}px)`,
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
         {/* Optional: Add a subtle texture or overlay image here if desired, but keeping pure dark/gold as requested */}
       </div>
 
@@ -46,8 +48,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         </div>
         
         <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter mb-6 opacity-0 animate-[slideUp_1s_ease-out_forwards]" style={{ animationDelay: '0.4s' }}>
-          O Sabor <br />
-          <span className="text-gold-gradient drop-shadow-[0_0_15px_rgba(191,149,63,0.3)]">Começa Aqui</span>
+          A Alma de <br />
+          <span className="text-gold-gradient drop-shadow-[0_0_15px_rgba(191,149,63,0.3)]">Angola</span>
         </h1>
 
         <p className="font-sans text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed opacity-0 animate-[slideUp_1s_ease-out_forwards]" style={{ animationDelay: '0.6s' }}>

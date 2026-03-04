@@ -6,19 +6,19 @@ const testimonials = [
   {
     name: "Mariana Costa",
     role: "Crítica Gastronômica",
-    text: "Uma explosão de sabores indescritível. O Wagyu A5 é simplesmente a melhor carne que já provei em Luanda. O atendimento é de classe mundial.",
+    text: "O melhor Mufete de Luanda, sem dúvidas. O peixe estava fresquíssimo e o molho de cebola com o feijão de óleo de palma estava divino.",
     rating: 5
   },
   {
     name: "Carlos Eduardo",
     role: "Empresário",
-    text: "O ambiente é perfeito para fechar negócios importantes. A privacidade, a carta de vinhos e a sofisticação fazem do Sabores do Começo minha única escolha.",
+    text: "Trouxe meus sócios estrangeiros para provar a Moamba de Galinha e ficaram encantados. A sofisticação do lugar com a comida típica é a combinação perfeita.",
     rating: 5
   },
   {
     name: "Sofia Mendes",
-    role: "Sommelier",
-    text: "Fiquei impressionada com a harmonização proposta pelo Chef. A adega é vasta e muito bem curada. Uma joia em Talatona.",
+    role: "Cliente Habitual",
+    text: "A Mousse de Múcua é uma obra de arte. O ambiente é acolhedor e o serviço nos faz sentir em casa. Recomendo para jantares de família.",
     rating: 5
   }
 ];

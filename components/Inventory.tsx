@@ -1,89 +1,118 @@
 import React, { useState } from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { Car } from '../types';
-import { Clock, Flame, Utensils, ArrowUpRight } from 'lucide-react';
+import { Clock, Flame, Utensils, ArrowUpRight, Download } from 'lucide-react';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const dishes: Car[] = [
   {
     id: 1,
-    name: "Wagyu A5 Gold",
-    brand: "Cortes Nobres",
-    year: "30 min",
-    price: "25.000 KZ",
-    features: ["Wagyu Japão", "Folha de Ouro", "Trufas"],
-    image: "https://images.unsplash.com/photo-1546833998-877b37c2e5c4?q=80&w=1000&auto=format&fit=crop"
+    name: "Moamba de Galinha",
+    brand: "Prato Típico",
+    year: "45 min",
+    price: "15.000 KZ",
+    features: ["Galinha Rija", "Funge de Bombó", "Quiabos"],
+    image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 2,
-    name: "Lagosta Thermidor",
-    brand: "Frutos do Mar",
-    year: "45 min",
+    name: "Mufete Completo",
+    brand: "Especialidade",
+    year: "40 min",
     price: "18.000 KZ",
-    features: ["Lagosta Fresca", "Queijo Gruyère", "Ervas Finas"],
-    image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1000&auto=format&fit=crop"
+    features: ["Peixe Grelhado", "Feijão de Óleo", "Batata Doce"],
+    image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 3,
-    name: "Risoto de Açafrão",
-    brand: "Prato Principal",
-    year: "25 min",
-    price: "12.000 KZ",
-    features: ["Arroz Arbóreo", "Açafrão Real", "Parmesão"],
-    image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?q=80&w=1000&auto=format&fit=crop"
+    name: "Calulu de Peixe Seco",
+    brand: "Tradição",
+    year: "35 min",
+    price: "14.000 KZ",
+    features: ["Peixe Seco", "Funge de Milho", "Legumes"],
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 4,
-    name: "Caviar Beluga",
-    brand: "Entradas",
-    year: "10 min",
-    price: "Sob Consulta",
-    features: ["Caviar Importado", "Blinis", "Creme Azedo"],
-    image: "https://images.unsplash.com/photo-1625937751876-4515cd8e7752?q=80&w=1000&auto=format&fit=crop"
+    name: "Cabidela de Galinha",
+    brand: "Prato Típico",
+    year: "50 min",
+    price: "16.500 KZ",
+    features: ["Galinha do Campo", "Arroz", "Sangue Fresco"],
+    image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 5,
-    name: "Tiramisu Gold",
-    brand: "Sobremesa",
-    year: "15 min",
-    price: "6.000 KZ",
-    features: ["Mascarpone", "Café Arábica", "Cacau"],
-    image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=1000&auto=format&fit=crop"
+    name: "Funge de Carne Seca",
+    brand: "Tradição",
+    year: "40 min",
+    price: "15.500 KZ",
+    features: ["Carne Seca", "Funge Misto", "Molho de Tomate"],
+    image: "https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 6,
-    name: "Vinho Château Margaux",
-    brand: "Adega",
-    year: "Safra 2015",
-    price: "Sob Consulta",
-    features: ["Tinto", "França", "Encorpado"],
-    image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1000&auto=format&fit=crop"
+    name: "Choco Frito",
+    brand: "Frutos do Mar",
+    year: "25 min",
+    price: "13.000 KZ",
+    features: ["Choco Fresco", "Batata Frita", "Molho Tártaro"],
+    image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 7,
-    name: "Salmão Grelhado",
-    brand: "Frutos do Mar",
-    year: "25 min",
-    price: "14.000 KZ",
-    features: ["Salmão Fresco", "Aspargos", "Molho Citrico"],
-    image: "https://images.unsplash.com/photo-1467003909585-2f8a7270028d?q=80&w=1000&auto=format&fit=crop"
+    name: "Feijão de Óleo de Palma",
+    brand: "Acompanhamento",
+    year: "30 min",
+    price: "8.000 KZ",
+    features: ["Feijão Manteiga", "Óleo de Palma", "Tempero Caseiro"],
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 8,
-    name: "Carré de Cordeiro",
-    brand: "Cortes Nobres",
-    year: "40 min",
-    price: "19.500 KZ",
-    features: ["Cordeiro", "Hortelã", "Purê Rústico"],
-    image: "https://images.unsplash.com/photo-1544025162-d76690b6d029?q=80&w=1000&auto=format&fit=crop"
+    name: "Kitaba (Entrada)",
+    brand: "Petiscos",
+    year: "15 min",
+    price: "5.000 KZ",
+    features: ["Pasta de Amendoim", "Piri-piri", "Mandioca"],
+    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1000&auto=format&fit=crop"
   },
   {
     id: 9,
-    name: "Sushi Premium Set",
-    brand: "Japonês",
+    name: "Banana Pão Assada",
+    brand: "Acompanhamento",
     year: "20 min",
-    price: "22.000 KZ",
-    features: ["Peixe Fresco", "Sashimi", "Nigiri"],
-    image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=1000&auto=format&fit=crop"
+    price: "3.000 KZ",
+    features: ["Banana Pão", "Brasa", "Mel (Opcional)"],
+    image: "https://images.unsplash.com/photo-1603052875302-d376b7c0638a?q=80&w=1000&auto=format&fit=crop"
+  },
+  {
+    id: 10,
+    name: "Mousse de Múcua",
+    brand: "Sobremesa",
+    year: "10 min",
+    price: "4.000 KZ",
+    features: ["Fruta Múcua", "Creme", "Toque de Canela"],
+    image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?q=80&w=1000&auto=format&fit=crop"
+  },
+  {
+    id: 11,
+    name: "Kissangua Tradicional",
+    brand: "Bebidas",
+    year: "Fresco",
+    price: "2.500 KZ",
+    features: ["Milho/Ananás", "Fermentação Natural", "Gelada"],
+    image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1000&auto=format&fit=crop"
+  },
+  {
+    id: 12,
+    name: "Vinho Português",
+    brand: "Adega",
+    year: "Safra 2018",
+    price: "Sob Consulta",
+    features: ["Tinto", "Douro", "Encorpado"],
+    image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1000&auto=format&fit=crop"
   }
 ];
 
@@ -159,6 +188,67 @@ export const Inventory: React.FC = () => {
     ? dishes 
     : dishes.filter(dish => dish.brand === activeCategory);
 
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+    // Add Logo/Header
+    doc.setFillColor(5, 5, 5); // Black background for header
+    doc.rect(0, 0, 210, 40, 'F');
+    
+    doc.setTextColor(191, 149, 63); // Gold color
+    doc.setFontSize(22);
+    doc.setFont("helvetica", "bold");
+    doc.text("SABORES DO COMEÇO", 105, 20, { align: "center" });
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text("Menu Exclusivo", 105, 28, { align: "center" });
+
+    // Prepare table data
+    const tableData = dishes.map(dish => [
+      dish.name,
+      dish.brand, // Category
+      dish.features.join(', '),
+      dish.price
+    ]);
+
+    autoTable(doc, {
+      startY: 50,
+      head: [['Prato', 'Categoria', 'Detalhes', 'Preço']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [191, 149, 63], // Gold
+        textColor: [0, 0, 0],
+        fontStyle: 'bold'
+      },
+      styles: {
+        fontSize: 10,
+        cellPadding: 6,
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245]
+      },
+      columnStyles: {
+        0: { fontStyle: 'bold', cellWidth: 50 },
+        2: { cellWidth: 'auto' },
+        3: { fontStyle: 'bold', halign: 'right' }
+      }
+    });
+
+    // Footer
+    const pageCount = doc.getNumberOfPages();
+    for(let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setTextColor(100);
+        doc.text('Sabores do Começo - Luanda, Angola', 105, 290, { align: 'center' });
+    }
+
+    doc.save('menu-sabores-do-comeco.pdf');
+  };
+
   return (
     <section id="inventory" className="py-24 bg-brand-black relative">
       <div className="container mx-auto px-6">
@@ -196,9 +286,13 @@ export const Inventory: React.FC = () => {
         </div>
         
          <div className="mt-16 text-center">
-             <a href="#contact" className="inline-flex px-8 py-3 border border-[#BF953F] text-[#FCF6BA] uppercase text-sm tracking-widest hover:bg-[#BF953F] hover:text-black transition-all duration-300">
-                Ver Carta Completa em PDF
-            </a>
+             <button 
+                onClick={generatePDF}
+                className="inline-flex items-center gap-2 px-8 py-3 border border-[#BF953F] text-[#FCF6BA] uppercase text-sm tracking-widest hover:bg-[#BF953F] hover:text-black transition-all duration-300"
+             >
+                <Download className="w-4 h-4" />
+                Baixar Menu em PDF
+            </button>
          </div>
       </div>
     </section>

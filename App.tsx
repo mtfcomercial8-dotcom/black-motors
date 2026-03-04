@@ -17,6 +17,9 @@ import { MessageCircle } from 'lucide-react';
 import { PageType } from './types';
 import { supabase } from './lib/supabaseClient';
 
+import { Gallery } from './components/Gallery';
+import { Team } from './components/Team';
+
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -85,6 +88,7 @@ const App: React.FC = () => {
               <Hero onNavigate={handleNavigate} />
               <Featured />
               <About />
+              <Team />
               <ChefSpotlight />
               <Services />
               <Testimonials />
@@ -94,6 +98,12 @@ const App: React.FC = () => {
           {currentPage === 'inventory' && (
             <div className="pt-20 min-h-screen bg-brand-black">
                <Inventory />
+               <Newsletter />
+            </div>
+          )}
+          {currentPage === 'gallery' && (
+            <div className="pt-20 min-h-screen bg-brand-black">
+               <Gallery />
                <Newsletter />
             </div>
           )}

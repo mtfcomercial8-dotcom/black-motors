@@ -5,8 +5,8 @@ import { NavItem, PageType } from '../types';
 const navItems: NavItem[] = [
   { label: 'Início', href: '#hero' },
   { label: 'O Chef', href: '#about' },
-  { label: 'Experiências', href: '#services' },
   { label: 'Menu', href: '#inventory' },
+  { label: 'Galeria', href: '#gallery' },
   { label: 'Reservas', href: '#reservation' },
 ];
 
@@ -35,6 +35,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
       onNavigate('inventory');
     } else if (href === '#reservation') {
       onNavigate('reservation');
+    } else if (href === '#gallery') {
+      onNavigate('gallery');
     } else {
       onNavigate('home', href);
     }

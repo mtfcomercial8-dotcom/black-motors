@@ -5,13 +5,13 @@ import { Utensils, Wine, PartyPopper, ChefHat } from 'lucide-react';
 const services = [
     {
         icon: <Utensils className="w-8 h-8" />,
-        title: "Jantar à La Carte",
-        description: "Um menu cuidadosamente elaborado com ingredientes locais e importados, preparado por nossos chefs premiados."
+        title: "Buffet de Domingo",
+        description: "O melhor da nossa terra reunido em um buffet farto: Kizaca, Feijão de Óleo de Palma, e muito mais."
     },
     {
         icon: <PartyPopper className="w-8 h-8" />,
-        title: "Eventos Privados",
-        description: "Transforme sua celebração em um momento inesquecível com nosso salão exclusivo e menu personalizado."
+        title: "Festas Tradicionais",
+        description: "Celebre casamentos (Alambamento) e aniversários com o autêntico sabor de Angola e serviço premium."
     },
     {
         icon: <Wine className="w-8 h-8" />,

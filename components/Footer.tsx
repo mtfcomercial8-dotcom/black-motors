@@ -16,7 +16,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                             SABORES<span className="text-gold-gradient">DOCOMEÇO</span>
                         </h2>
                         <p className="text-gray-400 max-w-sm mb-8">
-                            A referência em alta gastronomia em Luanda. Trazemos o que há de mais moderno e exclusivo no mundo culinário diretamente para sua mesa.
+                            A referência em gastronomia angolana em Luanda. Trazemos o sabor autêntico da nossa terra com a sofisticação que você merece.
                         </p>
                         <div className="flex gap-4">
                             <a href="https://www.instagram.com/saboresdocomeco/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 hover:bg-gold-metallic hover:text-black flex items-center justify-center transition-colors text-white border border-white/10 hover:border-transparent">
@@ -53,6 +53,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                             <li><button onClick={() => onNavigate('home', '#about')} className="hover:text-[#FCF6BA] transition-colors text-left">O Chef</button></li>
                             <li><button onClick={() => onNavigate('home', '#services')} className="hover:text-[#FCF6BA] transition-colors text-left">Experiências</button></li>
                             <li><button onClick={() => onNavigate('inventory')} className="hover:text-[#FCF6BA] transition-colors text-left">Menu</button></li>
+                            <li><button onClick={() => onNavigate('gallery')} className="hover:text-[#FCF6BA] transition-colors text-left">Galeria</button></li>
                             <li><button onClick={() => onNavigate('reservation')} className="hover:text-[#FCF6BA] transition-colors">Reservar Mesa</button></li>
                         </ul>
                     </div>

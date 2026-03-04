@@ -3,16 +3,16 @@ import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
 const featuredDishes = [
   {
-    image: "https://images.unsplash.com/photo-1544025162-d76690b6d029?q=80&w=1000&auto=format&fit=crop",
-    label: "Fusion Cuisine"
+    image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1000&auto=format&fit=crop",
+    label: "Moamba de Galinha"
   },
   {
-    image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1000&auto=format&fit=crop",
-    label: "Cortes Premium"
+    image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1000&auto=format&fit=crop",
+    label: "Mufete Tradicional"
   },
   {
-    image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?q=80&w=1000&auto=format&fit=crop",
-    label: "Adega Exclusiva"
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1000&auto=format&fit=crop",
+    label: "Calulu de Peixe"
   }
 ];
 

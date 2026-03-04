@@ -16,11 +16,11 @@ export const About: React.FC = () => {
                  <div className="flex flex-col md:flex-row gap-16 items-center">
                      <div className="w-full md:w-1/2" ref={elementRef}>
                          <h2 className={`text-4xl md:text-6xl font-display font-bold text-white mb-8 uppercase leading-tight transition-all duration-700 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'}`}>
-                             Não servimos apenas comida, <br/>
-                             <span className="text-gold-gradient">Criamos Memórias.</span>
+                             Mais que um restaurante, <br/>
+                             <span className="text-gold-gradient">Uma Tradição.</span>
                          </h2>
                          <p className={`text-gray-400 text-lg mb-8 leading-relaxed transition-all duration-700 delay-200 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'}`}>
-                             O Sabores do Começo nasceu da paixão pela arte culinária e pelo atendimento impecável. Em Luanda, nos estabelecemos como o destino para quem busca sofisticação no paladar. Nosso compromisso é com ingredientes frescos, técnicas refinadas e um ambiente que inspira.
+                             O Sabores do Começo celebra a riqueza da gastronomia angolana. Em Luanda, somos o refúgio para quem busca o verdadeiro sabor da terra, preparado com requinte e servido com a hospitalidade que define o nosso povo. Do Funge quentinho aos sabores intensos do Calulu.
                          </p>
                          
                          <div className={`grid grid-cols-3 gap-8 transition-all duration-700 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
@@ -36,7 +36,7 @@ export const About: React.FC = () => {
                      <div className="w-full md:w-1/2 relative">
                          <div className="relative z-10 border border-white/10 bg-white/5 p-2 backdrop-blur-sm">
                              {/* Restaurant Interior Image */}
-                             <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop" alt="Ambiente do Restaurante" className="w-full h-auto shadow-2xl" />
+                             <img src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?q=80&w=1000&auto=format&fit=crop" alt="Ambiente do Restaurante" className="w-full h-auto shadow-2xl" />
                          </div>
                          {/* Decorative squares */}
                          <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-[#BF953F] z-0 opacity-70"></div>

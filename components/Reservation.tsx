@@ -96,7 +96,7 @@ export const Reservation: React.FC = () => {
         {/* Background Image Parallax Feel */}
         <div className="absolute inset-0 z-0">
             <img 
-                src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?q=80&w=1000&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2000&auto=format&fit=crop" 
                 alt="Dining Table" 
                 className="w-full h-full object-cover opacity-30 fixed"
             />

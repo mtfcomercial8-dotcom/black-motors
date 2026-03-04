@@ -21,7 +21,7 @@ export const ChefSpotlight: React.FC = () => {
             <div className="relative z-10">
                 <div className="absolute inset-0 border border-[#BF953F]/30 translate-x-4 translate-y-4"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?q=80&w=1000&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=1000&auto=format&fit=crop" 
                   alt="Chef Executivo" 
                   className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl"
                 />
@@ -36,7 +36,7 @@ export const ChefSpotlight: React.FC = () => {
             </h2>
             
             <p className="text-gray-400 text-lg leading-relaxed mb-8">
-              "A cozinha não é apenas sobre alimentar o corpo, mas sobre contar histórias através dos sabores. Cada prato que crio no Sabores do Começo é uma viagem entre as minhas raízes angolanas e as técnicas contemporâneas da gastronomia mundial."
+              "A cozinha angolana é a minha herança e a minha paixão. Cada prato no Sabores do Começo é uma homenagem às nossas avós, mas com a técnica e a apresentação que a gastronomia moderna exige. Do tempero da Moamba ao ponto perfeito do peixe no Mufete."
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
