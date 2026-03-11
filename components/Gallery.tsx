@@ -13,7 +13,7 @@ const galleryImages = [
     category: "Bebidas"
   },
   {
-    src: "https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?q=80&w=1000&auto=format&fit=crop",
+    src: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop",
     alt: "Ambiente do Restaurante",
     category: "Ambiente"
   },

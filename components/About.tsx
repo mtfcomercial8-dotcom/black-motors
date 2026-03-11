@@ -36,7 +36,7 @@ export const About: React.FC = () => {
                      <div className="w-full md:w-1/2 relative">
                          <div className="relative z-10 border border-white/10 bg-white/5 p-2 backdrop-blur-sm">
                              {/* Restaurant Interior Image */}
-                             <img src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?q=80&w=1000&auto=format&fit=crop" alt="Ambiente do Restaurante" className="w-full h-auto shadow-2xl" />
+                             <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop" alt="Ambiente do Restaurante" className="w-full h-auto shadow-2xl" />
                          </div>
                          {/* Decorative squares */}
                          <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-[#BF953F] z-0 opacity-70"></div>
